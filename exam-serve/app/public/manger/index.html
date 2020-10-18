@@ -123,18 +123,18 @@
                 });
                 this.$('#room').html(optionStr);
                 form.render('select');
-                request('/manger/grade').then(grades=>{
-                    if(grades.code === 1){
+                request('/manger/grade').then(grades => {
+                    if (grades.code === 1) {
                         grades = grades.data;
-                        grades = grades.map(item=>{
-                            let obj = data.data.find(val=>val.room_id === item.room_id)
+                        grades = grades.map(item => {
+                            let obj = data.data.find(val => val.room_id === item.room_id)
                             let room_text = '';
-                            if(obj){
+                            if (obj) {
                                 room_text = obj.room_text;
                             }
-                            return {...item,room_text}
+                            return { ...item, room_text }
                         });
-                        grades = grades.map(item=>{
+                        grades = grades.map(item => {
                             return `<tr>
                                 <td>${item.grade_name}</td>    
                                 <td>${item.room_text}</td>        
@@ -145,8 +145,8 @@
                 })
             });
             // 获取所有的课程
-            request('/exam/subject').then(data=>{
-                if(data.code === 1){
+            request('/exam/subject').then(data => {
+                if (data.code === 1) {
                     let optStr = data.data.map(item => {
                         return `<option value="${item.subject_id}">${item.subject_text}</option>`
                     });
@@ -155,9 +155,9 @@
                 }
             });
             // 获取所有的班级
-            request('/manger/grade').then(data=>{
-                if(data.code === 1){
-                    let htmlStr = data.data.map(item=>{
+            request('/manger/grade').then(data => {
+                if (data.code === 1) {
+                    let htmlStr = data.data.map(item => {
                         return `<option value="${item.grade_id}">${item.grade_name}</option>`
                     });
                     this.$('#grade').html(htmlStr);
@@ -182,10 +182,10 @@
             })
 
             // 查看所有的学生
-            request('/manger/student').then(data=>{
+            request('/manger/student').then(data => {
                 console.log(data);
             })
-            
+
         });
     </script>
 </body>

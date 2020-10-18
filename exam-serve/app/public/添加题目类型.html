@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@
         }
     </style>
 </head>
+
 <body>
     <form action="/exam/insertQuestionsType" method="GET">
         <input type="text" placeholder="请输入题目的类型" />
@@ -28,24 +30,24 @@
         let oText = document.querySelector('input[type=text]');
         let oSort = document.querySelector('input[type=number]');
         let oTypes = document.querySelector('.types');
-        btn.onclick = ()=>{
+        btn.onclick = () => {
             let text = oText.value;
             let sort = oSort.value;
-            fetch('/exam/insertQuestionsType?text='+text+'&sort='+sort).then(res=>res.json()).then(data=>{
+            fetch('/exam/insertQuestionsType?text=' + text + '&sort=' + sort).then(res => res.json()).then(data => {
                 console.log(data);
-                
+
                 alert(data.msg);
-                
+
                 location.reload();
             })
         }
-        fetch('/exam/getQuestionsType').then(res=>res.json()).then(data=>{
+        fetch('/exam/getQuestionsType').then(res => res.json()).then(data => {
             console.log(data);
             oTypes.innerHTML = renderQuestionsType(data.data);
 
         });
-        function renderQuestionsType(data){
-            return data.map(item=>{
+        function renderQuestionsType(data) {
+            return data.map(item => {
                 return `<li data-typeid="${item.questions_type_id}" data-sort="${item.questions_type_sort}">
                         <span class="text">${item.questions_type_text}</span>
                         <div class="more">
@@ -56,27 +58,28 @@
                     </li>`
             }).join('');
         }
-        oTypes.addEventListener('click',ev=>{
-            if(ev.target.className === 'text'){
+        oTypes.addEventListener('click', ev => {
+            if (ev.target.className === 'text') {
                 ev.target.nextElementSibling.classList.toggle('show');
             }
-            if(ev.target.className === 'del'){
+            if (ev.target.className === 'del') {
                 let id = ev.target.parentNode.dataset.typeid;
-                fetch('/exam/delQuestionsType',{
-                    method:'POST',
-                    body:JSON.stringify({id}),
-                    headers:{'content-type':'application/json'}
-                }).then(res=>res.json()).then(data=>{
+                fetch('/exam/delQuestionsType', {
+                    method: 'POST',
+                    body: JSON.stringify({ id }),
+                    headers: { 'content-type': 'application/json' }
+                }).then(res => res.json()).then(data => {
                     console.log(data);
-                    if(data.code === 1){
+                    if (data.code === 1) {
                         alert(data.msg)
                         ev.target.parentNode.parentNode.removeChild(ev.target.parentNode);
-                    }else{
+                    } else {
                         alert(data.msg);
                     }
                 })
             }
-        },false)
+        }, false)
     </script>
 </body>
+
 </html>
