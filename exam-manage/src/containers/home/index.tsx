@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MyMenu from './Menu'
+import MyMenu from './components/Menu'
 import RouterView from '@/router';
 class Home extends Component<any> {
     render() {
